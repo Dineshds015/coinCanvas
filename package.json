@@ -1,0 +1,27 @@
+{
+  "name": "coincanvas",
+  "version": "1.0.0",
+  "description": "It's an expanse management portal where we can manage our ledger,transactions , track savings to meet our financial goal as well as generate report",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Dineshds015/coinCanvas.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Dineshds015/coinCanvas/issues"
+  },
+  "homepage": "https://github.com/Dineshds015/coinCanvas#readme",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "express": "^4.18.2",
+    "hbs": "^4.2.0",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.0.0"
+  }
+}
