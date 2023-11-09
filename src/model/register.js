@@ -26,18 +26,19 @@ const employeeSchema=new mongoose.Schema({
     }]
 });
 
-// employeeSchema.methods.generateAuthToken=async function(){
-//     try {
-//         const token=jwt.sign({_id:this._id},"dineshds015dineshdp015official015");
-//         console.log(token);
-//         this.tokens=this.tokens.concat({tokenArr:token});
-//         await this.save();
-//         return token;
-//     } catch (err) {
-//         res.send("The err part: "+err);
-//         console.log("The err part: "+err);
-//     }
-// }
+employeeSchema.methods.generateAuthToken=async function(){
+    try {
+        const token=jwt.sign({_id:this._id},process.env.SECRET_KEY);
+        //console.log(token);
+        //console.log(process.env.SECRET_KEY);
+        this.tokens=this.tokens.concat({tokenArr:token});
+        await this.save();
+        return token;
+    } catch (err) {
+        res.send("The err part: "+err);
+        console.log("The err part: "+err);
+    }
+}
 
 //hashed password
 employeeSchema.pre("save",async function(next){
