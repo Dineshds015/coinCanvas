@@ -17,6 +17,9 @@ const employeeSchema=new mongoose.Schema({
         type:String,
         required:true
     },
+    image:{
+        type:String,
+    },
     gender:String,
     tokens:[{
         tokenArr:{
@@ -29,8 +32,6 @@ const employeeSchema=new mongoose.Schema({
 employeeSchema.methods.generateAuthToken=async function(){
     try {
         const token=jwt.sign({_id:this._id},process.env.SECRET_KEY);
-        //console.log(token);
-        //console.log(process.env.SECRET_KEY);
         this.tokens=this.tokens.concat({tokenArr:token});
         await this.save();
         return token;

@@ -39,16 +39,20 @@ app.post("/register",async(req,res)=>{
         const cpassword=req.body.cpass;
 
         if(password===cpassword){
-            //shifted this part in register.js file
-            // const passwordHash=await bcrypt.hash(req.body.pass,10);
-            // console.log(passwordHash);
             const registerEmployee=new Registers({
                 name:req.body.name,
                 email:req.body.email,
                 contact:req.body.contact,
-                password:req.body.pass
+                password:req.body.pass,
+                image:req.body.img
             });
-            //const token=await registerEmployee.generateAuthToken();
+            // const token=await registerEmployee.generateAuthToken();
+
+            // res.cookie("jwt",token,{
+            //     expires:new Date(Date.now()+2000),
+            //     httpOnly:true
+            // });
+            // console.log(cookie);
 
             const registered=await registerEmployee.save();
             res.status(201).render("index");
