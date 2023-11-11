@@ -46,7 +46,8 @@ app.post("/register",async(req,res)=>{
                 password:req.body.pass,
                 image:req.body.img
             });
-            // const token=await registerEmployee.generateAuthToken();
+
+            const token=await registerEmployee.generateAuthToken();
 
             // res.cookie("jwt",token,{
             //     expires:new Date(Date.now()+2000),
@@ -76,11 +77,14 @@ app.post("/login",async(req,res)=>{
 
         const userEmail=await Registers.findOne({email:email});
         const passwordMatch=await bcrypt.compare(pass,userEmail.password);
-        //TO generate token
-        const token=await userEmail.generateAuthToken();
-        // console.log("the token part: "+token);
-        // console.log(passwordMatch);
+
         if(passwordMatch){
+            //TO generate token
+            const token=await userEmail.generateAuthToken();
+            res.cookie("jwt",token,{
+                expires:new Date(Date.now()+2000),
+                httpOnly:true
+            });
             res.status(201).render("index");
             res.send("Login Successfully");
         }

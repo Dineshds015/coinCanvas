@@ -31,7 +31,7 @@ const employeeSchema=new mongoose.Schema({
 
 employeeSchema.methods.generateAuthToken=async function(){
     try {
-        const token=jwt.sign({_id:this._id},process.env.SECRET_KEY);
+        const token=jwt.sign({_id:this._id},"dineshds015dineshdp015official015");
         this.tokens=this.tokens.concat({tokenArr:token});
         await this.save();
         return token;
@@ -40,13 +40,15 @@ employeeSchema.methods.generateAuthToken=async function(){
         console.log("The err part: "+err);
     }
 }
-
+var isModified=false;
 //hashed password
 employeeSchema.pre("save",async function(next){
-    //console.log(`Pre password: ${this.password}`);
-    this.password=await bcrypt.hash(this.password,10);
-    //console.log(`Post password: ${this.password}`);
-})
+    if(!isModified)
+    {
+        this.password=await bcrypt.hash(this.password,10);
+        isModified=true;
+    }
+});
 
 const Register=new mongoose.model("register",employeeSchema);
 module.exports=Register;
