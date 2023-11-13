@@ -1,9 +1,11 @@
+require("dotenv").config();
 const express=require("express");
 const app=express();
 const path=require("path");
 const hbs=require("hbs");
 const bcrypt=require("bcryptjs");
 const jwt=require("jsonwebtoken");
+const port=process.env.PORT || 8000;
 require("./db/conn");
 
 const Registers=require("./model/register");
@@ -37,16 +39,21 @@ app.post("/register",async(req,res)=>{
         const cpassword=req.body.cpass;
 
         if(password===cpassword){
-            //shifted this part in register.js file
-            // const passwordHash=await bcrypt.hash(req.body.pass,10);
-            // console.log(passwordHash);
             const registerEmployee=new Registers({
                 name:req.body.name,
                 email:req.body.email,
                 contact:req.body.contact,
-                password:req.body.pass
+                password:req.body.pass,
+                image:req.body.img
             });
-            //const token=await registerEmployee.generateAuthToken();
+
+            const token=await registerEmployee.generateAuthToken();
+
+            // res.cookie("jwt",token,{
+            //     expires:new Date(Date.now()+2000),
+            //     httpOnly:true
+            // });
+            // console.log(cookie);
 
             const registered=await registerEmployee.save();
             res.status(201).render("index");
@@ -68,13 +75,16 @@ app.post("/login",async(req,res)=>{
         const email=req.body.email;
         const pass=req.body.pass;
 
-        const userEmail=await Register.findOne({email:email});
+        const userEmail=await Registers.findOne({email:email});
         const passwordMatch=await bcrypt.compare(pass,userEmail.password);
-        //TO generate token
-        //const token=await userEmail.generateAuthToken();
-        //console.log("the token part: "+token);
-        console.log(passwordMatch);
+
         if(passwordMatch){
+            //TO generate token
+            const token=await userEmail.generateAuthToken();
+            res.cookie("jwt",token,{
+                expires:new Date(Date.now()+2000),
+                httpOnly:true
+            });
             res.status(201).render("index");
             res.send("Login Successfully");
         }
@@ -91,6 +101,6 @@ app.get("/about",(req,res)=>{
     res.render("about");
 });
 
-app.listen(8000,()=>{
-    console.log("port 8000 listening!");
+app.listen(port,()=>{
+    console.log(`port ${port} listening!`);
 });
