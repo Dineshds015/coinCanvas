@@ -5,12 +5,26 @@
     box-sizing:border-box;
     font-family: "Piazzolla",serif;
 }
-
+/* #0097e6 */
 :root{
-    --main-bg:#1e272e;
+    --main-bg:#161d22;
     --main-color:#0097e6;
+    --primary-color:rgba(212, 251, 223, 0.96);
+    --secondary-color:black;
 }
-
+.dark-theme{
+    --main-bg:rgb(18, 16, 16);
+    --main-color:#0097e6;
+    --primary-color:#182c25;
+    --secondary-color:white;
+}
+.theme-button{
+    background: none;
+    cursor: pointer;
+    margin:0;
+    padding:0;
+    border:none;
+}
 html{
     font-size: 62.5%;;
 }
@@ -19,6 +33,8 @@ body{
     height:100vh;
     display: flex;
     flex-direction: column;
+    background-color: var(--primary-color);
+    color:var(--secondary-color);
 }
 .row{
     margin:0;
@@ -128,4 +144,10 @@ footer p{
         height:auto;
         margin:3rem;
     }
+}
+
+#theme
+{
+    height: 3rem;
+    width: 3rem;
 }
