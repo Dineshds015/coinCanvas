@@ -1,45 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/login.css">
-    <title>Document</title>
+    {{>headerLinks}}
 </head>
 <body>
-    
-<div class="container" id="container">
-	<div class="form-container sign-in-container">
-		<form action="login" method="POST">
-			<h1>Sign in</h1>
-			<div class="social-container">
-				<a href="#fb" class="social">F<i class="fab fa-facebook-f"></i></a>
-				<a href="#gl" class="social">G<i class="fab fa-google-plus-g"></i></a>
-			</div>
-			<span>or use your account</span>
-			{{!-- <input type="email" name="email" placeholder="Email" /> --}}
-            <input type="email" id="email" name="email" placeholder="Email">
-			{{!-- <input type="password" name="password" placeholder="Password" /> --}}
-            <input type="password" class="form-control" id="password" name="pass" placeholder="Password">
-			<a href="#">Forgot your password?</a>
-			<button type="submit">Sign In</button>
+    {{>navbar}}
+	<div class="container" id="container">
+		<div class="form-container" id="login-form">
+		<h1>Login</h1>
+		<form>
+			<label for="username">Username</label>
+			<input type="text" id="username" name="username" required>
+			<label for="password">Password</label>
+			<input type="password" id="password" name="password" required>
+			<button type="submit">Login</button>
 		</form>
-	</div>
-	<div class="overlay-container">
-		<div class="overlay">
-			<div class="overlay-panel overlay-left">
-				<h1>Welcome Back!</h1>
-				<p>To keep connected with us please login with your personal info</p>
-				<button class="ghost" id="signIn">Sign In</button>
-			</div>
-			<div class="overlay-panel overlay-right">
-				<h1>Hello, Friend!</h1>
-				<p>Enter your personal details and start journey with coinCanvas</p>
-				<button class="ghost" id="signUp">Sign Up</button>
-			</div>
+		<p>Don't have an account? <a href="#" id="signup-link">Sign up</a></p>
 		</div>
-	</div>
 </div>
-
+    {{!-- {{>footer}} --}}
 </body>
 </html>
