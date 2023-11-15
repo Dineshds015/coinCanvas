@@ -29,25 +29,9 @@ const employeeSchema=new mongoose.Schema({
     }]
 });
 
-employeeSchema.methods.generateAuthToken=async function(){
-    try {
-        const token=jwt.sign({_id:this._id},"dineshds015dineshdp015official015");
-        this.tokens=this.tokens.concat({tokenArr:token});
-        await this.save();
-        return token;
-    } catch (err) {
-        res.send("The err part: "+err);
-        console.log("The err part: "+err);
-    }
-}
-var isModified=false;
 //hashed password
 employeeSchema.pre("save",async function(next){
-    if(!isModified)
-    {
-        this.password=await bcrypt.hash(this.password,10);
-        isModified=true;
-    }
+    this.password=await bcrypt.hash(this.password,10);
 });
 
 const Register=new mongoose.model("register",employeeSchema);
