@@ -108,9 +108,13 @@ app.get('/logout',(req, res)=>{
     });
 });
 
-app.get("/about",(req,res)=>{
-    res.render("about");
+// app.get("/about",(req,res)=>{
+//     res.render("about");
+// });
+app.get("/dashboard",(req,res)=>{
+    res.render("dashboard");
 });
+
 
 app.listen(port,()=>{
     console.log(`port ${port} listening!`);
