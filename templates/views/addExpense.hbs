@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {{>headerLinks}}
+</head>
+<body>
+    {{>navbar}}
+<!-- main header -->
+<div class="container" id="container">
+    <div class="form-container" id="expense-form">
+		<h1>Sign Up</h1>
+		<form action="addExpense" method="POST">
+			<label for="amt">Amount</label>
+			<input type="text" id="amount" name="amount" required>
+			<label for="category">Category</label>
+			<select name="category" id="category">
+				<option value="Food">Food</option>
+				<option value="Shopping">Shopping</option>
+				<option value="Fuel">Fuel</option>
+				<option value="Other">Other</option>
+			</select>
+            <label for="paymethod">Payment Method</label>
+            <select name="payMethod" id="payMethod">
+				<option value="Cash">Cash</option>
+				<option value="UPI">UPI</option>
+				<option value="Credit/Debit Card">Credit/Debit Card</option>
+				<option value="Net Banking">Net Banking</option>
+			</select>
+			<label for="paydate">Payment Date</label>
+			<input type="date" id="payDate" name="payDate" required>
+            <label for="description">Description</label>
+            <input type="text" id="description" name="description" placeholder="(Optional)" required>
+
+			<button type="submit">Add +</button>
+		</form>
+	</div>
+</div>
+{{!-- {{>footer}} --}}
+</body>
+</html>
