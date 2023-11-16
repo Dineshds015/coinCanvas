@@ -76,78 +76,78 @@ body{
     align-items: center;
     gap: 100px;
 }
+
 /* login */
-  h1 {
-    text-align: center;
-    margin-bottom: 30px;
-    font-size: 36px;
-    color: var(--accent-color);
-  }
-
-  form {
-    display: flex;
-    flex-direction: column;
-  }
-
-  label {
-    margin-bottom: 10px;
-    font-size: 18px;
-  }
-
-  input {
-    padding: 12px;
-    border: none;
-    border-radius: 5px;
-    margin-bottom: 20px;
-    font-size: 16px;
-    color: #fff;
-    background-color: #555;
-  }
-
-  button{
-    background: #191919;
-    font-size: medium;
-    border:none;
-    border-radius:5px;
-    padding:10px 36px;
-    cursor: pointer;
-    color: white;
-    transition: background-color 0.2s ease-in-out;
+h1 {
+  text-align: center;
+  margin-bottom: 30px;
+  font-size: 36px;
+  color: var(--accent-color);
 }
 
-  button:hover {
-    background-color: var(--accent-color);
-  }
+form {
+  display: flex;
+  flex-direction: column;
+}
 
-  a {
-    text-decoration: none;
-    color: var(--accent-color);
-    font-size: 18px;
-    transition: color 0.2s ease-in-out;
-  }
+label {
+  margin-bottom: 10px;
+  font-size: 18px;
+}
 
-  a:hover {
-    color: var(--accent-color);
-  }
+input {
+  padding: 12px;
+  border: none;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  font-size: 16px;
+  color: #fff;
+  background-color: #555;
+}
 
-  p {
-    margin: 8px;
-  }
+button{
+  background: #191919;
+  font-size: medium;
+  border:none;
+  border-radius:5px;
+  padding:10px 36px;
+  cursor: pointer;
+  color: white;
+  transition: background-color 0.2s ease-in-out;
+}
+
+button:hover {
+  background-color: var(--accent-color);
+}
+
+a {
+  text-decoration: none;
+  color: var(--accent-color);
+  font-size: 18px;
+  transition: color 0.2s ease-in-out;
+}
+
+a:hover {
+  color: var(--accent-color);
+}
+
+p {
+  margin: 8px;
+}
 
 img{
-    /* border-radius: 20px; */
-    border: 3px solid var(--accent-color);
+  /* border-radius: 20px; */
+  border: 3px solid var(--accent-color);
 }
 
-
 footer{
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    color: white;
-    text-align: center;
-    background-color: transparent;
-    text-transform: uppercase;
-    padding: 20px;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  color: white;
+  text-align: center;
+  background-color: transparent;
+  text-transform: uppercase;
+  padding: 20px;
 }

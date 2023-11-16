@@ -5,14 +5,19 @@
     --main-transition: all 0.3s ease-in-out;
 }
   
+*{
+    margin: 0;
+    padding: 0;
+}
+
 body {
 	font-family: "Montserrat", sans-serif;
     color: white;
 	background: black;
 }
 
-
 .sidebar {
+    border-right: 1px solid white;
 	width: 200px;
 	height: 100vh;
 	padding: 0px 2%;
@@ -20,8 +25,7 @@ body {
     text-transform: uppercase;
 }
 
-.sidebar a{
-    transition: var(--main-transition);
+.sidebar a, .dashboard a, .logo{
     color: #fff;
     text-decoration: none;
     padding: 7px 15px;
@@ -29,8 +33,11 @@ body {
 	font-weight: 300;
     transition: var(--main-transition);
 }
+.logo a{
+    transition: var(--main-transition);
+}
 
-.sidebar a:hover{
+.sidebar a:hover, .dashboard a:hover, .logo a:hover{
     color: var(--accent-color);
 }
 
@@ -67,7 +74,18 @@ button:hover {
 	font-size: 16px;
 }
 
-.menu a:first-child {
-	color: var(--accent-color);
+header{
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    text-transform: uppercase;
+    border-bottom: 1px solid white;
+}
+
+header a{
+    text-decoration: none;
+    color: white;
+    font-size: 16px;
+    font-weight: 300;
 }
 

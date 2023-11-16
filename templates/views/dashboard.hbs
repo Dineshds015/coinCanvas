@@ -7,24 +7,53 @@
     <link rel="stylesheet" href="css/dashboard.css">
 </head>
 <body>
-    <div class="sidebar">
-	<h1 class="logo"><a href="#">Coin Canvas</a></h1>
-	<ul class="menu">
-		<a href="">
-			Dashboard
-		</a>
-		<br>
-		<a href="">
-			Analysis
-		</a>
-		<a href="">
-			Daily
-		</a>
-        <div class="sidebar-buttons">
-		<button>Add Expense</button>
-        <button>Logout</button>
+    <header class="navbar">
+		<h1 class="logo"><a href="#">Coin Canvas</a></h1>
+        <h2 class="dashboard"><a href="#">Dashboard</a></h2>  
+        <div class="nav-right">
+        <div class="img">
+        <img id="profile-img" src="../images/profile.png" alt="Profile" width="40"/>
         </div>
-	</ul>
+    </header>
+    <div class="content">
+        <div class="sidebar">
+            <ul class="menu">
+			<br>
+			<a href="">
+				Analysis
+			</a>
+			<a href="">
+				Daily
+			</a>
+			<div class="sidebar-buttons">
+			<button>Add Expense</button>
+			<button>Logout</button>
+			</div>
+		</ul>
+        </div> 
+        <div class="container">
+            <div class="welcome-user">
+                <div class="greeting">
+                    <h3>Hello there,</h3>
+                    <h1>Himanshu Negi (@ryujin)</h1>
+                </div>
+            </div>
+            <div class="main-content">
+                <div class="mid-content">
+                    <div class="heading">
+                        <h2>Expenses</h2>
+                    </div>
+                    <div class="projects">
+                        
+                    </div>
+                </div>
+                <div class="right-side">
+                    <div class="categories">
+                        <h2>Transactions</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </body>
 </html>
