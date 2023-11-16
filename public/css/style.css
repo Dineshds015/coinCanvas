@@ -65,10 +65,24 @@ body{
     letter-spacing: 0.1rem;
 }
 
+.fa-coin-front{
+  transition: all linear;
+  animation: rot 2s linear infinite;
+  color:var(--main-color);
+}
+
 .nav a:hover {
     color: var(--accent-color);
 }
 
+@keyframes rot{
+  0%{
+      transform: rotate(0deg);
+  }
+  100%{
+      transform: rotate(360deg);
+  }
+}
 .content{
     padding: 50px;
     display: flex;
@@ -94,7 +108,7 @@ body{
     font-size: 18px;
   }
 
-  input {
+  input, select {
     padding: 12px;
     border: none;
     border-radius: 5px;
@@ -150,3 +164,18 @@ footer{
     text-transform: uppercase;
     padding: 20px;
 }
+
+[data-letters]:before {
+  content:attr(data-letters);
+  display:inline-block;
+  font-size:1em;
+  width:2.5em;
+  height:2.5em;
+  line-height:2.5em;
+  text-align:center;
+  border-radius:50%;
+  background:rgb(110, 20, 165);
+  vertical-align:middle;
+  margin-right:1em;
+  color:white;
+  }

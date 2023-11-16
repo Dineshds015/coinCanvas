@@ -1,0 +1,70 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap");
+
+:root {
+    --accent-color: #a876aa;
+    --main-transition: all 0.3s ease-in-out;
+}
+  
+body {
+	font-family: "Montserrat", sans-serif;
+    color: white;
+}
+
+.logo-text {
+	display: inline-block;
+	color: #020202;
+	font-size: 1.4em;
+}
+
+.sidebar {
+	width: 200px;
+	height: 100vh;
+	padding: 0px 2%;
+	float: left;
+    text-transform: uppercase;
+}
+
+.sidebar a{
+    transition: var(--main-transition);
+}
+
+.sidebar a:hover{
+    color: var(--accent-color);
+}
+
+button{
+    background: #191919;
+    font-size: medium;
+    border:none;
+    border-radius:5px;
+    padding:10px 36px;
+    cursor: pointer;
+    color: white;
+    margin-top: 20px;
+    transition: background-color 0.2s ease-in-out;
+}
+
+button:hover {
+    background-color: var(--accent-color);
+}
+
+.menu {
+	margin-top: 30px;
+	width: 100%;
+	padding: 0px;
+	margin-left: 8px;
+}
+
+.menu a {
+	width: 100%;
+	color: #666666;
+	text-decoration: none;
+	margin: 15px 0px;
+	float: left;
+	display: block;
+	font-size: 1.2em;
+}
+
+.menu a:first-child {
+	color: var(--accent-color);
+}

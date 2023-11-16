@@ -20,13 +20,7 @@ const employeeSchema=new mongoose.Schema({
     image:{
         type:String,
     },
-    gender:String,
-    tokens:[{
-        tokenArr:{
-            type:String,
-            // required:true
-        }
-    }]
+    gender:String
 });
 
 //hashed password
