@@ -8,13 +8,9 @@
 body {
 	font-family: "Montserrat", sans-serif;
     color: white;
+	background: black;
 }
 
-.logo-text {
-	display: inline-block;
-	color: #020202;
-	font-size: 1.4em;
-}
 
 .sidebar {
 	width: 200px;
@@ -25,6 +21,12 @@ body {
 }
 
 .sidebar a{
+    transition: var(--main-transition);
+    color: #fff;
+    text-decoration: none;
+    padding: 7px 15px;
+    font-size: 16px;
+	font-weight: 300;
     transition: var(--main-transition);
 }
 
@@ -57,12 +59,12 @@ button:hover {
 
 .menu a {
 	width: 100%;
-	color: #666666;
+	color: white;
 	text-decoration: none;
 	margin: 15px 0px;
 	float: left;
 	display: block;
-	font-size: 1.2em;
+	font-size: 16px;
 }
 
 .menu a:first-child {
