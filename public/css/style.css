@@ -3,6 +3,8 @@
 :root {
   --accent-color: #a876aa;
   --main-transition: all 0.3s ease-in-out;
+  --primary-color:black;
+  --secondary-color:white;
 }
 
 *{
@@ -13,8 +15,8 @@
 
 body{
     font-family: "Montserrat", sans-serif;
-    color: white;
-    background: black;
+    color: var(--secondary-color);
+    background: var(--primary-color);
     padding-bottom: 50px;
     display: flex;
     flex-direction: column;
@@ -53,7 +55,7 @@ body{
 
 .nav a {
     position: relative;
-    color: #fff;
+    color: var(--secondary-color);
     text-decoration: none;
     padding: 7px 15px;
     font-weight: 300;
@@ -100,23 +102,23 @@ body{
     border-radius: 5px;
     margin-bottom: 20px;
     font-size: 16px;
-    color: #fff;
+    color: var(--secondary-color);
     background-color: #555;
   }
 
   button{
-    background: #191919;
+    background: var(--secondary-color);
     font-size: medium;
     border:none;
     border-radius:5px;
     padding:10px 36px;
     cursor: pointer;
-    color: white;
+    color: var(--primary-color);
     transition: background-color 0.2s ease-in-out;
 }
 
   button:hover {
-    background-color: var(--accent-color);
+    background-color: var(--secondary-color);
   }
 
   a {
@@ -145,9 +147,22 @@ footer{
     bottom: 0;
     left: 0;
     width: 100%;
-    color: white;
+    color: var(--secondary-color);
     text-align: center;
     background-color: transparent;
     text-transform: uppercase;
     padding: 20px;
+}
+
+/* theme change css */
+#theme{
+  border: none;
+  height: 2rem;
+  width: 2rem;
+}
+.dark-theme{
+  --accent-color: red;
+  --main-transition: all 0.3s ease-in-out;
+  --primary-color:white;
+  --secondary-color:black;
 }
