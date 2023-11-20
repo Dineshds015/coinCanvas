@@ -134,7 +134,15 @@ app.post("/login",async(req,res)=>{
             res.redirect("dashboard");
         }
         else{
-            res.send("Invalid Details");
+            //Desktop notification
+            notifier.notify({
+                title: '@coinCanvas',
+                message: 'Invalid Details!',
+                icon: path.join(__dirname, 'icon.jpg'),
+                sound: true,
+                wait: true
+              });
+            req.body.otp=null;
         }
     } catch (err) {
         res.send(err);
@@ -151,15 +159,18 @@ app.get('/logout',(req, res)=>{
 });
 
 //Dashboard Page
-app.get("/dashboard",(req,res)=>{
+app.get("/dashboard",async(req,res)=>{
     if(req.cookies.emailToken==null)
         res.redirect("login");
     try {
         //Checking the token which is login user
-        const decoded = jwt.verify(req.cookies.emailToken,"coinCanvas");
+        const decoded =await jwt.verify(req.cookies.emailToken,"coinCanvas");
         console.log(decoded.username);
+        const expenseDetails=await Expenses.find({user:decoded.username});
+        console.log(expenseDetails.amount);
         const userEmailToken={
-            username:decoded.username
+            username:decoded.username,
+            expense:expenseDetails
         }
         res.render("dashboard",userEmailToken);
       } 
@@ -170,10 +181,25 @@ app.get("/dashboard",(req,res)=>{
 });
 
 //To redirect addExpense page
-app.get("/addExpense",(req,res)=>{
+app.get("/addExpense",async (req,res)=>{
     if(req.cookies.emailToken==null)
         res.redirect("login");
-    res.render("addExpense");
+    try {
+        //Checking the token which is login user
+        const decoded =await jwt.verify(req.cookies.emailToken,"coinCanvas");
+        console.log(decoded.username);
+        const expenseDetails=await Expenses.find({user:decoded.username});
+        console.log(expenseDetails.amount);
+        const userEmailToken={
+            username:decoded.username,
+            expenses:expenseDetails
+        }
+        res.render("addExpense",userEmailToken);
+      } 
+    catch (err) {
+        res.render("index");
+        res.redirect('/');
+    }
 });
 
 //addExpanse in our database
@@ -189,15 +215,51 @@ app.post("/addExpense",async(req,res)=>{
                 paymentMethod:req.body.payMethod,
                 paymentDate:req.body.payDate,
                 Description:req.body.description,
+                paymentStatus:req.body.payStatus,
                 user:decoded.username
             });
             const registered=await addNewExpense.save();
-            res.status(201).render("dashboard");
+            res.redirect("addExpense");
             console.log("Expense Added Successfully!");
     } catch (error) {
         res.status(400).send(error);
     }
 });
+
+// Route to update an expense
+app.post('/updateExpense', async (req, res) => {
+    const { _id, category, amount, paymentMethod, Description, paymentDate, paymentStatus } = req.body;
+
+    try {
+        await Expenses.findByIdAndUpdate(_id, {
+            category,
+            amount,
+            paymentMethod,
+            Description,
+            paymentDate,
+            paymentStatus
+        });
+
+        res.status(200).send('Expense updated successfully');
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
+// Route to delete an expense
+app.get('/deleteExpense/:id', async (req, res) => {
+    const expenseId = req.params.id;
+
+    try {
+        await Expenses.findByIdAndDelete(expenseId);
+        res.status(200).send('Expense deleted successfully');
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
 
 //Fetching about page
 app.get("/about",(req,res)=>{
@@ -208,3 +270,6 @@ app.get("/about",(req,res)=>{
 app.listen(port,()=>{
     console.log(`port ${port} listening!`);
 });
+
+
+//Copied the items into addExpense page and try to show it there-Gept4

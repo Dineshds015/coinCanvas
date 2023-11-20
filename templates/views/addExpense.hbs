@@ -7,32 +7,166 @@
     {{>navbar}}
 <!-- main header -->
 <div class="container" id="container">
-    <div class="form-container" id="expense-form">
-		<h1>Sign Up</h1>
-		<form action="addExpense" method="POST">
-			<label for="amt">Amount</label>
-			<input type="text" id="amount" name="amount" required>
-			<label for="category">Category</label>
-			<select name="category" id="category">
-				<option value="Food">Food</option>
-				<option value="Shopping">Shopping</option>
-				<option value="Fuel">Fuel</option>
-				<option value="Other">Other</option>
-			</select>
-            <label for="paymethod">Payment Method</label>
-            <select name="payMethod" id="payMethod">
-				<option value="Cash">Cash</option>
-				<option value="UPI">UPI</option>
-				<option value="Credit/Debit Card">Credit/Debit Card</option>
-				<option value="Net Banking">Net Banking</option>
-			</select>
-			<label for="paydate">Payment Date</label>
-			<input type="date" id="payDate" name="payDate" required>
-            <label for="description">Description</label>
-            <input type="text" id="description" name="description" placeholder="(Optional)" required>
+	<div class="row">
+		<div class="col-12 col-md-4" id="addExpenseForm">
+			<div class="form-container">
+				<h1>Add Expense</h1>
+				<form action="addExpense" method="POST">
+					<label for="amt">Amount</label>
+					<input type="text" id="amount" name="amount" required>
+					<label for="category">Category</label>
+					<select name="category" id="category">
+						<option value="Food">Food</option>
+						<option value="Shopping">Shopping</option>
+						<option value="Fuel">Fuel</option>
+						<option value="Other">Other</option>
+					</select>
+					<label for="paymethod">Payment Method</label>
+					<select name="payMethod" id="payMethod">
+						<option value="Cash">Cash</option>
+						<option value="UPI">UPI</option>
+						<option value="Credit/Debit Card">Credit/Debit Card</option>
+						<option value="Net Banking">Net Banking</option>
+					</select>
+					<label for="paydate">Payment Date</label>
+					<input type="date" id="payDate" name="payDate" required>
+					<label for="description">Description</label>
+					<input type="text" id="description" name="description" placeholder="(Optional)" required>
+					<label for="paystatus">Payment Status</label>
+					<select name="payStatus" id="payStatus">
+						<option value="Pending">Pending</option>
+						<option value="Done">Done</option>
+					</select>
+					<button type="submit">Add +</button>
+				</form>
+			</div>
+		</div>
+		<!-- Update Form (initially hidden) -->
+		<div id="updateForm" style="display:none">
+			{{!-- UPDATE FORM CHANGES --}}
+			<h1>Update Expense</h1>
+			<form id="updateExpenseForm">
+				<input type="hidden" name="_id" id="updateId">
+				<label for="amt">Amount</label>
+				<input type="number" name="amount" id="updateAmount" required><br>
+				<label for="category">Category</label>
+				<select name="category">
+					<option id="updateCategory" value="" selected disabled></option>
+					<option value="Food">Food</option>
+					<option value="Shopping">Shopping</option>
+					<option value="Fuel">Fuel</option>
+					<option value="Other">Other</option>
+				</select>
+				<label for="paymethod">Payment Method</label>
+				<select name="paymentMethod" id="payMethod">
+					<option id="updatePaymentMethod" value="" selected disabled></option>
+					<option value="Cash">Cash</option>
+					<option value="UPI">UPI</option>
+					<option value="Credit/Debit Card">Credit/Debit Card</option>
+					<option value="Net Banking">Net Banking</option>
+				</select>
+				<label for="paydate">Payment Date</label>
+				<input type="date" name="paymentDate" id="updateDate" required><br>
+				<label for="description">Description</label>
+				<input type="text" name="Description" id="updateDescription" required><br>
+				<label for="paystatus">Payment Status</label>
+				<select name="paymentStatus" id="Status">
+					<option id="updateStatus" value=""></option>
+					<option value="Pending">Pending</option>
+					<option value="Done">Done</option>
+				</select>
+				<button type="button" onclick="updateExpense()">Update</button>
+			<button type="button" onclick="cancelExpense()">Cancel</button>
+			</form>
+		</div>
+		{{!-- Table Content --}}
+		<div class="col-6 col-md-4">
+			<table border="1" style="" id="tableContent">
+				<tr>
+					<th>Category</th>
+					<th>Amount</th>
+					<th>Payment Method</th>
+					<th>Description</th>
+					<th>Date</th>
+					<th>Status</th>
+					<th>Action</th>
+				</tr>
+				{{#each expenses}}
+					<tr>
+						<td>{{category}}</td>
+						<td>{{amount}}</td>
+						<td>{{paymentMethod}}</td>
+						<td>{{Description}}</td>
+						<td>{{paymentDate}}</td>
+						<td>{{paymentStatus}}</td>
+						<td>
+							<a href="#" onclick="showUpdateForm('{{_id}}', '{{category}}', '{{amount}}', '{{paymentMethod}}', '{{Description}}', '{{paymentDate}}', '{{paymentStatus}}')">Update</a>
+							<a href="#" onclick="deleteExpense('{{_id}}')">Delete</a>
+						</td>
+					</tr>
+				{{/each}}
+			</table>
+		</div>
+		
 
-			<button type="submit">Add +</button>
-		</form>
+		<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+		<script>
+			function showUpdateForm(id, category, amount, paymentMethod, Description, date, status) {
+				document.getElementById('addExpenseForm').style.display = 'none';
+				document.getElementById('updateForm').style.display = 'block';
+
+				document.getElementById('updateId').value = id;
+
+				document.getElementById('updateCategory').value = category;
+				document.getElementById('updateCategory').textContent = category;
+
+				document.getElementById('updateAmount').value = amount;
+
+				document.getElementById('updatePaymentMethod').value = paymentMethod;
+				document.getElementById('updatePaymentMethod').textContent = paymentMethod;
+
+				document.getElementById('updateDescription').value = Description;
+				document.getElementById('updateDate').value = date;
+
+				document.getElementById('updateStatus').value = status;
+				document.getElementById('updateStatus').textContent = status;
+			}
+	
+			function updateExpense() {
+				var formData = $('#updateExpenseForm').serialize();
+				
+				$.ajax({
+					type: 'POST',
+					url: '/updateExpense',
+					data: formData,
+					success: function(response) {
+						location.reload(); // Refresh the page after successful update
+					},
+					error: function(error) {
+						console.error(error);
+						alert('Error updating expense.');
+					}
+				});
+			}
+
+			function deleteExpense(id) {
+				$.ajax({
+					type: 'GET',
+					url: '/deleteExpense/' + id,
+					success: function(response) {
+						location.reload(); // Refresh the page after successful delete
+					},
+					error: function(error) {
+						console.error(error);
+						alert('Error deleting expense.');
+					}
+				});
+			}
+			function cancelExpense() {
+				location.reload();
+
+			}
+		</script>
 	</div>
 </div>
 {{!-- {{>footer}} --}}

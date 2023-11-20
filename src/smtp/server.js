@@ -9,8 +9,8 @@ const sendMail=async(email,otp)=>{
         host: 'smtp.ethereal.email',
         port: 587,
         auth: {
-            user: 'viola42@ethereal.email',
-            pass: 'MWJTTxgp2mS9XMfxmy'
+            user: process.env.SECRET_MAIL,
+            pass: process.env.SECRET_PASS
         }
     });
     
