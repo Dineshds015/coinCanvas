@@ -133,7 +133,9 @@ label {
 }
 
   button:hover {
-    background-color: var(--secondary-color);
+    background-color: var(--accent-color);
+    color:white;
+    transition: var(--main-transition);
   }
 
 a {
