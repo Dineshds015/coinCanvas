@@ -3,6 +3,8 @@
 :root {
   --accent-color: #a876aa;
   --main-transition: all 0.3s ease-in-out;
+  --primary-color:black;
+  --secondary-color:white;
 }
 
 *{
@@ -13,8 +15,8 @@
 
 body{
     font-family: "Montserrat", sans-serif;
-    color: white;
-    background: black;
+    color: var(--secondary-color);
+    background: var(--primary-color);
     padding-bottom: 50px;
     display: flex;
     flex-direction: column;
@@ -53,7 +55,7 @@ body{
 
 .nav a {
     position: relative;
-    color: #fff;
+    color: var(--secondary-color);
     text-decoration: none;
     padding: 7px 15px;
     font-weight: 300;
@@ -65,10 +67,24 @@ body{
     letter-spacing: 0.1rem;
 }
 
+.fa-coin-front{
+  transition: all linear;
+  animation: rot 2s linear infinite;
+  color:var(--main-color);
+}
+
 .nav a:hover {
     color: var(--accent-color);
 }
 
+@keyframes rot{
+  0%{
+      transform: rotate(0deg);
+  }
+  100%{
+      transform: rotate(360deg);
+  }
+}
 .content{
     padding: 50px;
     display: flex;
@@ -95,30 +111,30 @@ label {
   font-size: 18px;
 }
 
-input {
-  padding: 12px;
-  border: none;
-  border-radius: 5px;
-  margin-bottom: 20px;
-  font-size: 16px;
-  color: #fff;
-  background-color: #555;
+  input, select {
+    padding: 12px;
+    border: none;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    font-size: 16px;
+    color: var(--secondary-color);
+    background-color: #555;
+  }
+
+  button{
+    background: var(--secondary-color);
+    font-size: medium;
+    border:none;
+    border-radius:5px;
+    padding:10px 36px;
+    cursor: pointer;
+    color: var(--primary-color);
+    transition: background-color 0.2s ease-in-out;
 }
 
-button{
-  background: #191919;
-  font-size: medium;
-  border:none;
-  border-radius:5px;
-  padding:10px 36px;
-  cursor: pointer;
-  color: white;
-  transition: background-color 0.2s ease-in-out;
-}
-
-button:hover {
-  background-color: var(--accent-color);
-}
+  button:hover {
+    background-color: var(--secondary-color);
+  }
 
 a {
   text-decoration: none;
@@ -141,13 +157,40 @@ img{
 }
 
 footer{
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  color: white;
-  text-align: center;
-  background-color: transparent;
-  text-transform: uppercase;
-  padding: 20px;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    color: var(--secondary-color);
+    text-align: center;
+    background-color: transparent;
+    text-transform: uppercase;
+    padding: 20px;
+}
+
+[data-letters]:before {
+  content:attr(data-letters);
+  display:inline-block;
+  font-size:1em;
+  width:2.5em;
+  height:2.5em;
+  line-height:2.5em;
+  text-align:center;
+  border-radius:50%;
+  background:rgb(110, 20, 165);
+  vertical-align:middle;
+  margin-right:1em;
+  color:white;
+  }
+/* theme change css */
+#theme{
+  border: none;
+  height: 2rem;
+  width: 2rem;
+}
+.dark-theme{
+  --accent-color: red;
+  --main-transition: all 0.3s ease-in-out;
+  --primary-color:white;
+  --secondary-color:black;
 }
