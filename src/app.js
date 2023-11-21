@@ -8,6 +8,7 @@ const jwt=require("jsonwebtoken");
 const cookieParser=require("cookie-parser");
 const crypto = require('crypto');
 const notifier=require("node-notifier");
+const requests=require("requests");
 
 const port=process.env.PORT || 8000;
 require("./db/conn");
@@ -262,6 +263,33 @@ app.get('/deleteExpense/:id', async (req, res) => {
 
 
 //Fetching about page
+app.get("/currency",(req,res)=>{
+    let data='';
+    requests("http://api.exchangeratesapi.io/v1/latest?access_key=7b81a7b0177ec6b960aff916c22f2975&format=1").on("data",(chunk)=>{
+            data+=chunk;
+        }).on("end",(err)=>{
+            if(err)
+                return console.log("Connection closed due to errors",err);
+            try {
+                const objdata = JSON.parse(data);
+                const arrData = [objdata];
+                console.log(arrData[0].rates.USD);
+                const currData={
+                    inrRate:arrData[0].rates.INR,
+                    usdRate:arrData[0].rates.USD,
+                    audRate:arrData[0].rates.AUD,
+                    jpyRate:arrData[0].rates.JPY
+                }
+                // Render the currency.hbs file with the USD rate
+                res.render("currency", currData);
+            } catch (error) {
+                console.error("Error parsing JSON data", parseError);
+                res.status(500).send('Internal Server Error');
+            }
+        }); 
+        //res.render("currency");
+});
+
 app.get("/about",(req,res)=>{
     res.render("about");
 });
