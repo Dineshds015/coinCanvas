@@ -9,7 +9,7 @@ const cookieParser=require("cookie-parser");
 const crypto = require('crypto');
 const notifier=require("node-notifier");
 const requests=require("requests");
-
+const alert=require("alert");
 const port=process.env.PORT || 8000;
 require("./db/conn");
 
@@ -32,11 +32,15 @@ app.use(express.urlencoded({extended:false}));
 
 app.get("/",(req,res)=>{
     //res.send("hello from Dinesh");
-    res.render("index");
+    if(req.cookies.emailToken==null)
+        res.render("index");
+    else    
+        res.render("dashboard");
 });
 
 //including server.js file
 const sendMailer=require("./smtp/server");
+const { decode } = require("punycode");
 
 //Generating the AlfaNumeric OTP which is moreSecure
 function generateOTP() {
@@ -82,7 +86,13 @@ app.post("/register",async(req,res)=>{
                 contact:req.body.contact,
                 password:req.body.pass
             });
-        
+            //To check user is exists or not
+            // const userEmail=await Registers.findOne({email:email});
+            // if(userEmail)
+            // {
+            //     console.log("User already exists!");
+            //     return res.status(400).send("User already exists!");
+            // }
         //Inserting data into DB
         const registered=await registerEmployee.save();
         res.status(201).render("login");
@@ -116,12 +126,19 @@ app.get("/login",(req,res)=>{
 
 //Login as well as Generating tokenCookie
 app.post("/login",async(req,res)=>{
+    
     try {
         const email=req.body.email;
         const pass=req.body.pass;
         const userEmail=await Registers.findOne({email:email});
+        //To check Email validation 
+        if(userEmail==null)
+        {
+            console.log("User Not Found!");
+            return res.status(400).send("User Not Found!");
+        }
         const passwordMatch=await bcrypt.compare(pass,userEmail.password);
-
+        
         if(passwordMatch){
             const userData ={username:userEmail.email};
             //Token setup
@@ -190,10 +207,29 @@ app.get("/addExpense",async (req,res)=>{
         const decoded =await jwt.verify(req.cookies.emailToken,"coinCanvas");
         console.log(decoded.username);
         const expenseDetails=await Expenses.find({user:decoded.username});
-        console.log(expenseDetails.amount);
+
+        // Calculate total expenses
+        const totalExpenses = expenseDetails.reduce((total, expense) => total + expense.amount, 0);
+        console.log('Total Expenses:', totalExpenses);
+
+        // Find expenses with payment status "Pending"
+        const pendingExpenses = await Expenses.find({ user: decoded.username, paymentStatus: "Pending" });
+        // Calculate total pending expenses
+        const totalPendingExpenses = pendingExpenses.reduce((total, expense) => total + expense.amount, 0);
+        console.log('Total Pending Expenses:', totalPendingExpenses);
+
+        // Find expenses with payment status "Pending"
+        const doneExpenses = await Expenses.find({ user: decoded.username, paymentStatus: "Done" });
+        // Calculate total pending expenses
+        const totalDoneExpenses = doneExpenses.reduce((total, expense) => total + expense.amount, 0);
+        console.log('Total Pending Expenses:', totalDoneExpenses);
+
         const userEmailToken={
             username:decoded.username,
-            expenses:expenseDetails
+            expenses:expenseDetails,
+            totalExpenses:totalExpenses,
+            totalPendingExpenses:totalPendingExpenses,
+            totalDoneExpenses:totalDoneExpenses
         }
         res.render("addExpense",userEmailToken);
       } 
@@ -202,6 +238,7 @@ app.get("/addExpense",async (req,res)=>{
         res.redirect('/');
     }
 });
+
 
 //addExpanse in our database
 app.post("/addExpense",async(req,res)=>{
@@ -227,6 +264,7 @@ app.post("/addExpense",async(req,res)=>{
     }
 });
 
+
 // Route to update an expense
 app.post('/updateExpense', async (req, res) => {
     const { _id, category, amount, paymentMethod, Description, paymentDate, paymentStatus } = req.body;
@@ -251,7 +289,6 @@ app.post('/updateExpense', async (req, res) => {
 // Route to delete an expense
 app.get('/deleteExpense/:id', async (req, res) => {
     const expenseId = req.params.id;
-
     try {
         await Expenses.findByIdAndDelete(expenseId);
         res.status(200).send('Expense deleted successfully');
@@ -260,7 +297,6 @@ app.get('/deleteExpense/:id', async (req, res) => {
         res.status(500).send('Internal Server Error');
     }
 });
-
 
 //Fetching about page
 app.get("/currency",(req,res)=>{

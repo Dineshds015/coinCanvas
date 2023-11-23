@@ -194,3 +194,10 @@ footer{
   --primary-color:white;
   --secondary-color:black;
 }
+
+table {
+  height: 560px;
+  display: inline-block;
+  width: 100%;
+  overflow: auto;
+}
