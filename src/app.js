@@ -29,6 +29,7 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(express.urlencoded({extended:false}));
 
+
 app.get("/",(req,res)=>{
     //res.send("hello from Dinesh");
     res.render("index");
@@ -152,16 +153,16 @@ app.get('/logout',(req, res)=>{
 
 //Dashboard Page
 app.get("/dashboard",(req,res)=>{
-    if(req.cookies.emailToken==null)
-        res.redirect("login");
+    // if(req.cookies.emailToken==null)
+    //     res.redirect("login");
     try {
         //Checking the token which is login user
-        const decoded = jwt.verify(req.cookies.emailToken,"coinCanvas");
-        console.log(decoded.username);
-        const userEmailToken={
-            username:decoded.username
-        }
-        res.render("dashboard",userEmailToken);
+        // const decoded = jwt.verify(req.cookies.emailToken,"coinCanvas");
+        // console.log(decoded.username);
+        // const userEmailToken={
+        //     username:decoded.username
+        // }
+        res.render("dashboard");
       } 
     catch (err) {
         res.render("index");
@@ -209,3 +210,7 @@ app.get("/about",(req,res)=>{
 app.listen(port,()=>{
     console.log(`port ${port} listening!`);
 });
+
+
+//client_id=496077172715-816gpifud7q74omds971q3a957ikpci7.apps.googleusercontent.com
+//client_secret=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

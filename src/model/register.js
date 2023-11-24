@@ -1,6 +1,7 @@
 const bcrypt = require("bcryptjs");
 const mongoose=require("mongoose");
 const jwt=require("jsonwebtoken");
+
 const employeeSchema=new mongoose.Schema({
 
     name:{
@@ -30,3 +31,4 @@ employeeSchema.pre("save",async function(next){
 
 const Register=new mongoose.model("register",employeeSchema);
 module.exports=Register;
+

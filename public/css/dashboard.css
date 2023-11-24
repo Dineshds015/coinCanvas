@@ -1,91 +1,66 @@
-@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap");
-
 :root {
     --accent-color: #a876aa;
     --main-transition: all 0.3s ease-in-out;
+    --primary-color:black;
+    --secondary-color:white;
+  }
+.overall
+{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding-left: 2rem;
 }
-  
-*{
-    margin: 0;
-    padding: 0;
+.datashow
+{
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    width: 80%;
 }
-
-body {
-	font-family: "Montserrat", sans-serif;
-    color: white;
-	background: black;
+.upper
+{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    margin-bottom: 1rem;
 }
-
-.sidebar {
-    border-right: 1px solid white;
-	width: 200px;
-	height: 100vh;
-	padding: 0px 2%;
-	float: left;
+.datacontent
+{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding:1rem;
+    height: 5rem;
+    width: 30%;
+    background: var(--accent-color);
+    border-radius: 20px;
     text-transform: uppercase;
 }
-
-.sidebar a, .dashboard a, .logo{
-    color: #fff;
-    text-decoration: none;
-    padding: 7px 15px;
-    font-size: 16px;
-	font-weight: 300;
-    transition: var(--main-transition);
-}
-.logo a{
-    transition: var(--main-transition);
-}
-
-.sidebar a:hover, .dashboard a:hover, .logo a:hover{
-    color: var(--accent-color);
-}
-
-button{
-    background: #191919;
-    font-size: medium;
-    border:none;
-    border-radius:5px;
-    padding:10px 36px;
-    cursor: pointer;
-    color: white;
-    margin-top: 20px;
-    transition: background-color 0.2s ease-in-out;
-}
-
-button:hover {
-    background-color: var(--accent-color);
-}
-
-.menu {
-	margin-top: 30px;
-	width: 100%;
-	padding: 0px;
-	margin-left: 8px;
-}
-
-.menu a {
-	width: 100%;
-	color: white;
-	text-decoration: none;
-	margin: 15px 0px;
-	float: left;
-	display: block;
-	font-size: 16px;
-}
-
-header{
+.lower
+{
     display: flex;
     justify-content: space-between;
-    padding: 20px;
-    text-transform: uppercase;
-    border-bottom: 1px solid white;
+    padding: 2rem;
 }
-
-header a{
-    text-decoration: none;
-    color: white;
-    font-size: 16px;
-    font-weight: 300;
+.chart1
+{
+    height: 200px;
+    width: 400px;
 }
-
+.chart2
+{
+    height: 300px;
+}
+.images
+{
+    height: 3rem;
+    width: 3rem;
+    margin-right: 1rem;
+}
+.heading
+{
+    text-align: center;
+}
