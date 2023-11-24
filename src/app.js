@@ -31,6 +31,7 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(express.urlencoded({extended:false}));
 
+
 app.get("/",(req,res)=>{
     //res.send("hello from Dinesh");
     if(req.cookies.emailToken==null)
@@ -371,10 +372,8 @@ app.get("/about",(req,res)=>{
     res.render("about");
 });
 
+
 //Starts the server on $PORT which is by default 8000
 app.listen(port,()=>{
     console.log(`port ${port} listening!`);
 });
-
-
-//Copied the items into addExpense page and try to show it there-Gept4

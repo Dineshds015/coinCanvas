@@ -1,42 +1,191 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    {{>headerLinks}}
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.min.js" integrity="sha512-7U4rRB8aGAHGVad3u2jiC7GA5/1YhQcQjxKeaVms/bT66i3LVBMRcBI9KwABNWnxOSwulkuSXxZLGuyfvo7V1A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="stylesheet" href="css/dashboard.css"> 
+</head>
+<body>
+    {{>navbar}}
+    
+    <!-- main header -->
+    <div class="overall">
+        <div class="sidebar">
+            <div class="content"><h3>name</h3></div>
+            <div class="content"><h3>Transactions</h3></div>
+            <div class="content"><h3>settings</h3></div>
+        </div>
+        <div class="datashow">
+            <div class="upper">
+              <div class="datacontent">
+                <div>
+                  <img class="images" src="images/salary.png">
+                </div>
+                <div class="heading">
+                  total income
+                </div>
+              </div>
+              <div class="datacontent">
+                <div>
+                  <img class="images" src="images/expenses.png">
+                </div>
+                <div class="heading">
+                  total Expense
+                </div>
+              </div>
+              <div class="datacontent">
+                <div>
+                  <img class="images" src="images/law.png">
+                </div>
+                <div class="heading">
+                  balance
+                </div>
+              </div>
+            </div>
+            <div class="lower">
+              <div class="chart1">
+                <canvas id="barchart"></canvas>
+              </div>
+              <div class="chart2">
+                <canvas id="piechart"></canvas>
+              </div>
+            </div>
+        </div>
+        
+    </div>
+    
+    
+    
+    {{>footer}}
+</body>
+
+<script>
+   // var a = "bar";
+const ctx = document.getElementById('barchart');
+  new Chart(ctx, {
+    type: "line",
+    data: {
+      labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+      datasets: [{
+        label: '# of Votes',
+        data: [12, 19, 3, 5, 2, 3],
+        borderWidth: 1,
+        borderColor: '#FF6384',
+      }]
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  });
+  //var a = "pie";
+const btx = document.getElementById('piechart');
+  new Chart(btx, {
+    type: "pie",
+    data: {
+      labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+      datasets: [{
+        label: '# of Votes',
+        data: [12, 19, 3, 5, 2, 3],
+        borderWidth: 1
+      }]
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  });
+
+</script>
+</html>
+
+{{!-- <!DOCTYPE html>
+<html lang="en">
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Coin Canvas - Expense Tracker</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" href="css/dashboard.css">
 </head>
 <body>
-    <div class="sidebar">
-	<div class="logo">
-		<p class="logo-text">Coin Canvas</p>
-	</div>
-	<ul class="menu">
-		<a href="">
-			Dashboard
-		</a>
-		<br>
-        <a href="">{{username}}</a>
-		<a href="">
-			Analysis
-		</a>
-		<a href="">
-			Stocks
-		</a>
-		<a href="">
-			Crypto
-		</a>
-		<a href="/currency">
-			Currency Exchange
-		</a>
-		<a href="">
-			Daily
-		</a>
-        <div class="sidebar-buttons">
-			<a href="/addExpense"><button>Add Expense</button></a>
-			<a href="/logout"><button>Logout</button></a>
+    <header class="navbar">
+		<h1 class="logo"><a href="#">Coin Canvas</a></h1>
+        <h2 class="dashboard"><a href="#">Dashboard</a></h2>  
+        <div class="nav-right">
+        <div class="img">
+        <img id="profile-img" src="../images/profile.png" alt="Profile" width="40"/>
         </div>
-	</ul>
+    </header>
+    <div class="content">
+        <div class="sidebar">
+            <ul class="menu">
+			<br>
+			<a href="">
+				Analysis
+			</a>
+			<a href="">
+				Daily
+			</a>
+			<div class="sidebar-buttons">
+			<button>Add Expense</button>
+			<button>Logout</button>
+			</div>
+		</ul>
+        </div> 
+        <div class="container">
+            <div class="welcome-user">
+                <div class="greeting">
+                    <canvas id="myChart" width="400" height="400">
+                        hello world
+                    </canvas>
+                </div>
+            </div>
+            <div class="main-content">
+                <div class="mid-content">
+                    <div class="heading">
+                        <h2>Expenses</h2>
+                    </div>
+                    <div class="projects">
+                        
+                    </div>
+                </div>
+                <div class="right-side">
+                    <div class="categories">
+                        <h2>Transactions</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </body>
-</html>
+<script>
+  //const ctx = document.getElementById('myChart');
+
+  //new Chart(ctx, {
+    // type: 'bar',
+    //data: {
+    //  labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+     // datasets: [{
+      //  label: '# of Votes',
+       // data: [12, 19, 3, 5, 2, 3],
+        //borderWidth: 1
+      }]
+    },
+    options: {
+    //  scales: {
+      //  y: {
+        //  beginAtZero: true
+        }
+      }
+    }
+  });
+</script>
+</html> --}}

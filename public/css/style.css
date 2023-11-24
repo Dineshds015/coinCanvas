@@ -92,23 +92,24 @@ body{
     align-items: center;
     gap: 100px;
 }
+
 /* login */
-  h1 {
-    text-align: center;
-    margin-bottom: 30px;
-    font-size: 36px;
-    color: var(--accent-color);
-  }
+h1 {
+  text-align: center;
+  margin-bottom: 30px;
+  font-size: 36px;
+  color: var(--accent-color);
+}
 
-  form {
-    display: flex;
-    flex-direction: column;
-  }
+form {
+  display: flex;
+  flex-direction: column;
+}
 
-  label {
-    margin-bottom: 10px;
-    font-size: 18px;
-  }
+label {
+  margin-bottom: 10px;
+  font-size: 18px;
+}
 
   input, select {
     padding: 12px;
@@ -135,26 +136,25 @@ body{
     background-color: var(--secondary-color);
   }
 
-  a {
-    text-decoration: none;
-    color: var(--accent-color);
-    font-size: 18px;
-    transition: color 0.2s ease-in-out;
-  }
-
-  a:hover {
-    color: var(--accent-color);
-  }
-
-  p {
-    margin: 8px;
-  }
-
-img{
-    /* border-radius: 20px; */
-    border: 3px solid var(--accent-color);
+a {
+  text-decoration: none;
+  color: var(--accent-color);
+  font-size: 18px;
+  transition: color 0.2s ease-in-out;
 }
 
+a:hover {
+  color: var(--accent-color);
+}
+
+p {
+  margin: 8px;
+}
+
+img{
+  /* border-radius: 20px; */
+  border: 3px solid var(--accent-color);
+}
 
 footer{
     position: fixed;
