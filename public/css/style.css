@@ -36,6 +36,7 @@ body{
     right: 0;
     transition: var(--main-transition);
     text-transform: uppercase;
+    box-shadow: 0 5 15px var(--accent-color);
 }
 
 .nav .container {
@@ -193,4 +194,11 @@ footer{
   --main-transition: all 0.3s ease-in-out;
   --primary-color:white;
   --secondary-color:black;
+}
+
+table {
+  height: 560px;
+  display: inline-block;
+  width: 100%;
+  overflow: auto;
 }

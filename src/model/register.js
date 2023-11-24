@@ -3,7 +3,6 @@ const mongoose=require("mongoose");
 const jwt=require("jsonwebtoken");
 
 const employeeSchema=new mongoose.Schema({
-
     name:{
         type:String,
         required:true
@@ -17,12 +16,10 @@ const employeeSchema=new mongoose.Schema({
     password:{
         type:String,
         required:true
-    },
-    image:{
-        type:String,
-    },
-    gender:String
+    }
 });
+
+
 
 //hashed password
 employeeSchema.pre("save",async function(next){

@@ -6,21 +6,23 @@ const sendMail=async(email,otp)=>{
 
     //Connect with the smtp etherial
     const transporter = nodemailer.createTransport({
-        host: 'smtp.ethereal.email',
+        service:'gmail',
+        host: "smtp.gmail.com",
         port: 587,
+        secure:false,
         auth: {
-            user: 'viola42@ethereal.email',
-            pass: 'MWJTTxgp2mS9XMfxmy'
+            user: "dineshdp015@gmail.com",
+            pass: "rjno yoec ejwk oxij"
         }
     });
     
     //Checks the tranporter details whom to send and what to send
     let info=await transporter.sendMail({
-        from: '"coinCanvas@" <dineshds015@gmail.com>', // sender address
+        from: process.env.SECRET_MAIL, // sender address
         to: email, // list of receivers
         subject: "Email Verification", // Subject line
         text: "One Time Password: " + otp, // plain text body
-        html: "<b>Hello Client!</b>", // html body
+        html: `<b>OTP Verification!</b><h1>${otp}</h1>`, // html body
     });
 
     console.log("Message sent: %s",info.messageId);
