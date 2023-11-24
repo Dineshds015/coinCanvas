@@ -1,168 +1,142 @@
 :root {
-    --accent-color: #a876aa;
-    --main-transition: all 0.3s ease-in-out;
-    --primary-color:black;
-    --secondary-color:white;
-  }
-.overall
-{
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    padding-left: 2rem;
-}
-.datashow
-{
-    padding: 2rem;
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-    width: 80%;
-}
-.upper
-{
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: space-around;
-    margin-bottom: 1rem;
-}
-.datacontent
-{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding:1rem;
-    height: 5rem;
-    width: 30%;
-    background: var(--accent-color);
-    border-radius: 20px;
-    text-transform: uppercase;
+  --accent-color: #a876aa;
+  --main-transition: all 0.3s ease-in-out;
+  --primary-color:black;
+  --secondary-color:white;
 }
 
-.sidebar a{
-    transition: var(--main-transition);
+/* Reset some default styles */
+body, h1, h2, p, ul, li {
+  margin: 0;
+  padding: 0;
+}
+
+/* Basic styling */
+body {
+  font-family: 'Arial', sans-serif;
+}
+
+.container {
+  display: flex;
+}
+
+/* Sidebar Styles */
+.sidebar {
+  width: 200px;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: fixed;
+  color:var(--secondary-color);
+  box-shadow: 5px 0 15px var(--accent-color);
+}
+
+.sidebar ul a{
+  transition: var(--main-transition);
+  color:var(--secondary-color);
 }
 
 .sidebar a:hover{
-    color: var(--accent-color);
+  color: var(--accent-color);
 }
 
-button{
-    background: #191919;
-    font-size: medium;
-    border:none;
-    border-radius:5px;
-    padding:10px 36px;
-    cursor: pointer;
-    color: white;
-    margin-top: 20px;
-    transition: background-color 0.2s ease-in-out;
+.logo {
+  margin: 20px 0;
 }
-.chart2
-{
-    height: 300px;
+
+.menu {
+  list-style-type: none;
+  padding: 0;
 }
-.images
-{
-    height: 3rem;
-    width: 3rem;
-    margin-right: 1rem;
+
+.menu a {
+  text-decoration: none;
+  color: black;
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+  display: block;
 }
-.heading
-{
-    text-align: center;
+
+.menu a:hover {
+  background-color: #ddd;
 }
-/* .form-popup {
-    display: none;
-    position: fixed;
-    bottom: 0;
-    right: 15px;
-    border: 3px solid #f1f1f1;
-    z-index: 9;
-} */
 
-/* Style the form inside the pop-up */
-/* .form-container {
-    max-width: 300px;
-    padding: 10px;
-    background-color: white;
-} */
+/* Data Show Styles */
+.datashow {
+  flex: 1;
+  padding: 20px;
+  margin-left: 200px; /* Adjusted to accommodate the fixed sidebar */
+  overflow-y: auto; /* Enable vertical scroll for the right side */
+}
 
-/* Style the submit button */
-/* .btn {
-    background-color: #4CAF50;
-    color: white;
-    padding: 10px 15px;
-    border: none;
-    cursor: pointer;
-    width: 100%;
-    margin-bottom: 10px;
-} */
+.upper {
+  display: flex;
+  justify-content: space-between;
+}
 
-/* Add a red background color to the cancel button */
-/* .cancel {
-    background-color: red;
-} */
+.datacontent {
+  display: flex;
+  align-items: center;
+}
 
-/* Add some hover effects to buttons */
-/* .btn:hover, .open-button:hover {
-    opacity: 0.8;
-} */
+.images {
+  width: 50px;
+  height: 50px;
+  margin-right: 10px;
+}
 
-/*addExpense*/
-@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap");
+.heading {
+  font-size: 18px;
+}
 
-* {
-    box-sizing: border-box;
+.lower {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.chart1 {
+  width: 80%;
+}
+
+.chart2{
+  width:45%
+}
+
+/* Responsive Styling */
+@media only screen and (max-width: 768px) {
+  .container {
+      flex-direction: column;
   }
-  
-  body {
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-    width: 100vw;
-    margin: 0;
+
+  .sidebar {
+      width: 100%;
+      position: relative;
+      color: var(--primary-color);
+      z-index: 1; /* Ensure the sidebar is on top of the content */
   }
-  
-  header {
-    background: #80CBC4;
-    height: 15vh;
+  .sidebar a{
+      transition: var(--main-transition);
   }
-  
-  main {
-    display: flex;
-    height: 100%;
+
+  .sidebar a:hover{
+      color: var(--accent-color);
   }
-  
-  nav {
-    flex: 1;
-    background: #FFAB00;
+
+  .datashow {
+      padding: 10px;
+      margin-left: 0;
   }
-  
-  article {
-    flex: 3;
-    background: #ffd54f;
+
+  .upper,
+  .lower {
+      flex-direction: column;
   }
-  
-  aside {
-    flex: 2;
-    background: #FFF176;
+
+  .chart1,
+  .chart2 {
+      width: 100%;
+      margin-top: 20px;
   }
-  
-  footer {
-    background: #26A69A;
-    height: 20vh;
-  }
-  
-  header,
-  footer,
-  article,
-  nav,
-  aside {
-    padding: 1em;
-  }
-.heading
-{
-    text-align: center;
 }

@@ -26,7 +26,9 @@ app.use(express.static(staticPath));
 app.set("view engine","hbs");
 app.set("views",templatePath);
 hbs.registerPartials(partialsPath);
-
+hbs.registerHelper('json', function (context) {
+    return JSON.stringify(context);
+  });
 app.use(express.json());
 app.use(cookieParser());
 app.use(express.urlencoded({extended:false}));
@@ -179,26 +181,135 @@ app.get('/logout',(req, res)=>{
 });
 
 //Dashboard Page
-app.get("/dashboard",async(req,res)=>{
-    if(req.cookies.emailToken==null)
-        res.redirect("login");
+app.get("/dashboard", async (req, res) => {
+    if (req.cookies.emailToken == null) res.redirect("login");
     try {
-        //Checking the token which is login user
-        const decoded =await jwt.verify(req.cookies.emailToken,"coinCanvas");
-        console.log(decoded.username);
-        const expenseDetails=await Expenses.find({user:decoded.username});
-        console.log(expenseDetails.amount);
-        const userEmailToken={
-            username:decoded.username,
-            expense:expenseDetails
-        }
-        res.render("dashboard",userEmailToken);
-      } 
-    catch (err) {
-        res.render("index");
-        res.redirect('/');
+      const decoded = await jwt.verify(req.cookies.emailToken, "coinCanvas");
+      const categoryData = await Expenses.aggregate([
+        { $match: { user: decoded.username } },
+        {
+          $group: {
+            _id: "$category",
+            totalAmount: { $sum: "$amount" },
+          },
+        },
+      ]);
+      const userEmailToken = {
+        username: decoded.username,
+        categoryData: categoryData,
+      };
+  
+      res.render("dashboard", userEmailToken);
+    } catch (err) {
+      res.render("index");
     }
-});
+  });
+
+//Analysis Page 
+app.get("/analysis", async (req, res) => {
+    if (req.cookies.emailToken == null) res.redirect("login");
+    try {
+        const decoded = await jwt.verify(req.cookies.emailToken, "coinCanvas");
+
+        // Get current date
+        const currentDate = new Date();
+        
+        // Define start and end dates for different intervals
+        const startDateDaily = new Date(currentDate);
+        startDateDaily.setHours(0, 0, 0, 0);
+        
+        const startDateWeekly = new Date(currentDate);
+        startDateWeekly.setDate(currentDate.getDate() - currentDate.getDay());
+        startDateWeekly.setHours(0, 0, 0, 0);
+        
+        const startDateMonthly = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1, 0, 0, 0, 0);
+        
+        const startDateYearly = new Date(currentDate.getFullYear(), 0, 1, 0, 0, 0, 0);
+        
+        // Function to group expenses based on date
+        const groupByDate = (intervalStartDate) => {
+          const byDate= Expenses.aggregate([
+            {
+              $match: {
+                user: decoded.username,
+                paymentDate: { $gte: intervalStartDate },
+              },
+            },
+            {
+              $group: {
+                _id: { $dateToString: { format: "%Y-%m-%d", date: "$paymentDate" } },
+                totalAmount: { $sum: "$amount" },
+              },
+            },
+          ]);
+          return byDate;
+        };
+        
+        // Function to group expenses based on week number
+        const groupByWeek = (intervalStartDate) => {
+          const byWeek= Expenses.aggregate([
+            {
+              $match: {
+                user: decoded.username,
+                paymentDate: { $gte: intervalStartDate },
+              },
+            },
+            {
+              $group: {
+                _id: {
+                  $subtract: [
+                    { $week: "$paymentDate" },
+                    { $week: intervalStartDate },
+                  ],
+                },
+                totalAmount: { $sum: "$amount" },
+              },
+            },
+          ]);
+          return byWeek;
+        };
+        
+        // Function to group expenses based on month name
+        const groupByMonth = (intervalStartDate) => {
+          const byMonth= Expenses.aggregate([
+            {
+              $match: {
+                user: decoded.username,
+                paymentDate: { $gte: intervalStartDate },
+              },
+            },
+            {
+              $group: {
+                _id: { $dateToString: { format: "%B", date: "$paymentDate" } },
+                totalAmount: { $sum: "$amount" },
+              },
+            },
+          ]);
+          return byMonth;
+        };
+        
+        // Fetch data for different intervals
+        const dailyExpenses = await groupByDate(startDateDaily);
+        const weeklyExpenses = await groupByWeek(startDateWeekly);
+        const monthlyExpenses = await groupByMonth(startDateMonthly);
+        const yearlyExpenses = await groupByDate(startDateYearly);
+        
+        // Now you can use the extracted chart data with Chart.js to render the charts for daily, weekly, monthly, and yearly expenses.
+
+      const userEmailToken = {
+        username: decoded.username,
+        dailyExpenses:dailyExpenses,
+        weeklyExpenses:weeklyExpenses,
+        monthlyExpenses:monthlyExpenses,
+        yearlyExpenses:yearlyExpenses
+      };
+  
+      res.render("analysis", userEmailToken);
+    } catch (err) {
+        console.log(err);
+      res.render("index");
+    }
+  });
 
 //To redirect addExpense page
 app.get("/addExpense",async (req,res)=>{
@@ -300,19 +411,25 @@ app.get('/deleteExpense/:id', async (req, res) => {
     }
 });
 
-//Fetching about page
-app.get("/currency",(req,res)=>{
+//Fetching Currency page
+app.get("/currency",async (req, res)=>{
     let data='';
+    const decoded =await jwt.verify(req.cookies.emailToken,"coinCanvas");
+    console.log(decoded.username);
+    const expenseDetails=await Expenses.find({user:decoded.username});
+    //Currency Exchange API EUR-Base
     requests("http://api.exchangeratesapi.io/v1/latest?access_key=7b81a7b0177ec6b960aff916c22f2975&format=1").on("data",(chunk)=>{
             data+=chunk;
         }).on("end",(err)=>{
             if(err)
                 return console.log("Connection closed due to errors",err);
             try {
+                
                 const objdata = JSON.parse(data);
                 const arrData = [objdata];
                 console.log(arrData[0].rates.USD);
                 const currData={
+                    username:decoded.username,
                     inrRate:arrData[0].rates.INR,
                     usdRate:arrData[0].rates.USD,
                     audRate:arrData[0].rates.AUD,
@@ -325,7 +442,36 @@ app.get("/currency",(req,res)=>{
                 res.status(500).send('Internal Server Error');
             }
         }); 
-        //res.render("currency");
+});
+//Crypto Currency Page
+app.get("/crypto",async(req,res)=>{
+    if(req.cookies.emailToken==null)
+        res.render("index");
+    else    
+    {
+        const decoded =await jwt.verify(req.cookies.emailToken,"coinCanvas");
+        console.log(decoded.username);
+        const expenseDetails=await Expenses.find({user:decoded.username});
+        const userEmailToken={
+            username:decoded.username
+        }
+        res.render("crypto",userEmailToken);
+    }
+});
+//Stocks Page
+app.get("/stocks",async(req,res)=>{
+    if(req.cookies.emailToken==null)
+        res.render("index");
+    else    
+    {
+        const decoded =await jwt.verify(req.cookies.emailToken,"coinCanvas");
+        console.log(decoded.username);
+        const expenseDetails=await Expenses.find({user:decoded.username});
+        const userEmailToken={
+            username:decoded.username
+        }
+        res.render("stocks",userEmailToken);
+    }
 });
 
 //To redirect support page
