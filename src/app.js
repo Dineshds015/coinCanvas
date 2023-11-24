@@ -35,11 +35,13 @@ app.use(express.urlencoded({extended:false}));
 
 
 app.get("/",(req,res)=>{
-    //res.send("hello from Dinesh");
     if(req.cookies.emailToken==null)
         res.render("index");
     else    
         res.render("dashboard");
+});
+app.get("/index",(req,res)=>{
+        res.render("index");
 });
 
 //including server.js file
@@ -90,13 +92,6 @@ app.post("/register",async(req,res)=>{
                 contact:req.body.contact,
                 password:req.body.pass
             });
-            //To check user is exists or not
-            // const userEmail=await Registers.findOne({email:email});
-            // if(userEmail)
-            // {
-            //     console.log("User already exists!");
-            //     return res.status(400).send("User already exists!");
-            // }
         //Inserting data into DB
         const registered=await registerEmployee.save();
         res.status(201).render("login");
@@ -518,6 +513,9 @@ app.get("/about",(req,res)=>{
     res.render("about");
 });
 
+app.get("*",(req,res)=>{
+    res.render("index");
+});
 
 //Starts the server on $PORT which is by default 8000
 app.listen(port,()=>{
