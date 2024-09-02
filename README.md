@@ -1,2 +1,4 @@
 # coinCanvas
-It's a expense management portal where we can manage our ledger, transactions and track savings to meet our financial goal as well as generate report.
+An expense management portal that helps users manage ledgers, track transactions, and monitor savings to achieve financial goals.
+Key Features: Visualize expenses using Chart.js, manage cryptocurrencies and stocks via APIs, and generate financial reports.
+Tech Stack: Handlebars, CSS, Node.js, Express.js, MongoDB, Chart.js, Nodemailer, various APIs for cryptocurrencies and stocks integration.
