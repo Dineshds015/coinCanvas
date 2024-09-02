@@ -1,6 +1,6 @@
 # CoinCanvas
 
-An expense management portal that helps users manage ledgers, track transactions, and monitor savings to achieve financial goals.
+An intuitive expense management portal that helps users track transactions, manage investments, and achieve financial goals. Visualize expenses with interactive charts and integrate cryptocurrency and stock data seamlessly.
 
 ## ✨ Key Features
 
